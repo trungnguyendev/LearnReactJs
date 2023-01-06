@@ -1,5 +1,6 @@
 // class components
-// function component
+
+// function components
 
 import React from 'react'
 
@@ -9,6 +10,7 @@ class MyComponent extends React.Component {
         name: 'trung',
         age: 19,
         address: 'nam dinh'
+
     }
 
     handleClick(event) {
@@ -28,13 +30,28 @@ class MyComponent extends React.Component {
         //console.log(event.pageX)
     }
 
+    handleOnChangeInput = (event) => {
+        this.setState({
+            name: event.target.value
+        })
+    }
+
+    handleOnSubmit = (event) => {
+        event.preventDefault()
+        console.log(this.state)
+    }
+
     // JSX
     render() {
         return (
             <div>
                 My name is {this.state.name} and I'm age {this.state.age}
-                <button onClick={(event) => { this.handleClick(event) }}>Click Me</button>
-                <button onMouseOver={this.handleOnMouseOver}>Hover Me!</button>
+                <form onSubmit={(event) => this.handleOnSubmit(event)}>
+                    <input type="text"
+                        onChange={(event) => this.handleOnChangeInput(event)}
+                    />
+                    <button>Submit</button>
+                </form>
             </div>
         )
     }
