@@ -3,6 +3,7 @@
 // function components
 
 import React from 'react'
+import DisplayInfor from './DisplayInfor'
 import UserInfor from './UserInfor'
 
 class MyComponent extends React.Component {
@@ -12,6 +13,8 @@ class MyComponent extends React.Component {
         return (
             <div>
                 <UserInfor />
+                <p></p>
+                <DisplayInfor name='trung' age='19' />
             </div>
         )
     }
