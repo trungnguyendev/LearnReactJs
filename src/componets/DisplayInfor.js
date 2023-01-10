@@ -2,9 +2,27 @@ import React from 'react'
 import './DisplayInfor.scss'
 import logo from './../logo.svg'
 class DisplayInfor extends React.Component {
-    state = {
-        showListUser: true,
+    constructor(pros) {
+        super(pros)
+        this.state = {
+            showListUser: true,
+        }
     }
+    // state = {
+    //     showListUser: true,
+    // }
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.listUser !== prevProps.listUser)
+            if (this.props.listUser.length === 5) {
+                alert('5')
+            }
+    }
+    componentDidMount() {
+        setTimeout(() => {
+            document.title = 'trung pro'
+        }, 5000);
+    }
+
     handleShowHide = (event) => {
         this.setState({
             showListUser: !this.state.showListUser,
