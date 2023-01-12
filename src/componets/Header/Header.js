@@ -8,24 +8,23 @@ const Header = () => {
     return (
         <Navbar bg="light" expand="lg">
             <Container>
-                <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+                {/* <Navbar.Brand href="#home">Trung Dev</Navbar.Brand> */}
+                <NavLink to="/" className='navbar-brand'>Trung Dev</NavLink>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
                         <NavLink to="/" className='nav-link'>Home</NavLink>
-                        <NavLink to="/user" className='nav-link'>User</NavLink>
-                        <NavLink to="/admin" className='nav-link'>Admin</NavLink>
+                        <NavLink to="user" className='nav-link'>User</NavLink>
+                        <NavLink to="admin" className='nav-link'>Admin</NavLink>
                         {/* <Nav.Link href="/">Home</Nav.Link>
                         <Nav.Link href="/user">User</Nav.Link>
                         <Nav.Link href="/admin">Admin</Nav.Link> */}
                     </Nav>
                     <Nav>
                         <NavDropdown title="Settings" id="basic-nav-dropdown">
-                            <NavDropdown.Item href="#action/3.1">Log in</NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.2">
-                                Log out
-                            </NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.1">Profile</NavDropdown.Item>
+                            <NavDropdown.Item >Log in</NavDropdown.Item>
+                            <NavDropdown.Item >Log out</NavDropdown.Item>
+                            <NavDropdown.Item >Profile</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
                 </Navbar.Collapse>
