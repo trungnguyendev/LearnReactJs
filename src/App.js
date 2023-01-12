@@ -1,11 +1,12 @@
 import logo from './logo.svg';
 import './App.scss';
+import Header from './componets/Header/Header';
 
 const App = () => {
 
   return (
     <div className='app-container'>
-      <MyComponent></MyComponent>
+      <Header></Header>
     </div>
   )
 
