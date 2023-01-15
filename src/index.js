@@ -19,11 +19,10 @@ root.render(
         <Route path="/" element={<App />} >
           <Route index element={<HomePage />} />
           <Route path="user" element={<User />} />
-
-          <Route path="/admin" element={<Admin />} >
-            <Route index element={<DashBoard />} />
-            <Route path="ManageUser" element={<ManageUser />} />
-          </Route>
+        </Route>
+        <Route path="/admin" element={<Admin />} >
+          <Route index element={<DashBoard />} />
+          <Route path="ManageUser" element={<ManageUser />} />
         </Route>
       </Routes>
     </BrowserRouter>
