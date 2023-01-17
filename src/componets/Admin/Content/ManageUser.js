@@ -5,10 +5,13 @@ import TableUser from "./TableUser";
 import { useEffect, useState } from "react"
 import { getAllUsers } from "../../../services/apiService"
 import ModalUpdateUser from "./ModalUpdateUser";
+import ModalViewUser from "./ModalViewUser";
 const ManageUser = (props) => {
-    const [showModelCreateUser, setShowModalCreateUser] = useState(false)
-    const [showModelUpdateUser, setShowModalUpdateUser] = useState(false)
+    const [showModalCreateUser, setShowModalCreateUser] = useState(false)
+    const [showModalUpdateUser, setShowModalUpdateUser] = useState(false)
+    const [showModalViewUser, setShowModalViewUser] = useState(false)
     const [dataUpdate, setDataUpdate] = useState({})
+    const [dataView, setDataView] = useState({})
     const [listUsers, setlistUsers] = useState([])
     useEffect(() => {
         fetchListUsers()
@@ -23,8 +26,15 @@ const ManageUser = (props) => {
         setShowModalUpdateUser(true)
         setDataUpdate(user)
     }
+    const handleClickBtnView = (user) => {
+        setShowModalViewUser(true)
+        setDataView(user)
+    }
     const resetUpdateData = () => {
         setDataUpdate({})
+    }
+    const resetViewData = () => {
+        setDataView({})
     }
     return (
         <div className="manage-user-container">
@@ -37,18 +47,24 @@ const ManageUser = (props) => {
                 </div>
                 <div className="table-users-container">
                     <TableUser listUsers={listUsers}
-                        handleClickBtnUpdate={handleClickBtnUpdate} />
+                        handleClickBtnUpdate={handleClickBtnUpdate}
+                        handleClickBtnView={handleClickBtnView} />
                 </div>
                 <ModalCreateUser
-                    show={showModelCreateUser}
+                    show={showModalCreateUser}
                     setShow={setShowModalCreateUser}
                     fetchListUsers={fetchListUsers} />
                 <ModalUpdateUser
-                    show={showModelUpdateUser}
+                    show={showModalUpdateUser}
                     setShow={setShowModalUpdateUser}
                     dataUpdate={dataUpdate}
                     fetchListUsers={fetchListUsers}
                     resetUpdateData={resetUpdateData} />
+                <ModalViewUser
+                    show={showModalViewUser}
+                    setShow={setShowModalViewUser}
+                    dataView={dataView}
+                    resetViewData={resetViewData} />
             </div>
         </div>
     )
