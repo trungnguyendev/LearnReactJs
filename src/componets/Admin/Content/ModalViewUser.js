@@ -69,10 +69,6 @@ const ModalViewUser = (props) => {
     }
     return (
         <>
-            {/* <Button variant="primary" onClick={handleShow}>
-                Launch demo modal
-            </Button> */}
-
             <Modal show={show} onHide={handleClose} size="xl" backdrop="static" className='modal-add-user'>
                 <Modal.Header closeButton>
                     <Modal.Title>View a user</Modal.Title>
