@@ -10,10 +10,14 @@ const Login = () => {
     const handleBackHome = () => {
         navigate('/')
     }
+    const handleSignUp = () => {
+        navigate('/register')
+    }
     const handleLogin = async () => {
         let data = await postLogin(email, password)
         if (data && +data.EC === 0) {
             toast.success(data.EM)
+            navigate('/')
         }
         if (data && +data.EC !== 0) {
             toast.error(data.EM)
@@ -23,7 +27,7 @@ const Login = () => {
         <div className='login-container'>
             <div className='header'>
                 <span>Don't have an account yet ?</span>
-                <button>Sign up</button>
+                <button onClick={() => handleSignUp()}>Sign up</button>
             </div>
             <div className='title col-4 mx-auto'>
                 Trung Dev

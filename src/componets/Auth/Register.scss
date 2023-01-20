@@ -1,0 +1,58 @@
+.register-container{
+    .header{
+        height: 100px;
+        text-align: right;
+        padding: 10px 100px 0 0;
+        button{
+           border: none;
+           border-radius: 5px;
+           margin-left: 10px;
+           border: 1px solid;
+           background-color: rgb(243, 232, 232);
+           padding: 3px 5px;
+           &:hover{
+            cursor: pointer;
+            background-color: white;
+           }
+        }
+    }
+    .title{
+        font-size: 30px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .welcome{
+        font-size: 20px;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    .content-form{
+        input{
+            margin-top: 3px;
+            margin-bottom: 15px;
+        }
+        button{
+            width: 100%;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            padding: 10px 0;
+            background-color: black;
+            color: white;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .back{
+            cursor: pointer;
+        }
+        .form-group{
+            position: relative;
+            .icons-eye{
+                cursor: pointer;
+                position: absolute;
+                right: 10px;
+                bottom: 10px;
+            }
+        }
+    }
+
+}
