@@ -24,6 +24,7 @@ const DetailQuiz = (props) => {
                     let questionDescription, image = null;
                     let answers = []
                     value.forEach((item, index) => {
+                        item.answers.isSelected = false
                         answers.push(item.answers)
 
                         if (index === 0) {
@@ -42,8 +43,49 @@ const DetailQuiz = (props) => {
         setIndex(index - 1)
     }
     const handleNext = () => {
-        if (dataQuiz && dataQuiz.length > index)
+        if (dataQuiz && dataQuiz.length > index + 1)
             setIndex(index + 1)
+    }
+    const handleFinishQuiz = () => {
+        let payload = {
+            quizId: +quizId,
+            answers: []
+        }
+        let answers = []
+        if (dataQuiz && dataQuiz.length > 0) {
+            dataQuiz.map(question => {
+                let questionId = question.questionId
+                let userAnswerId = []
+                question.answers.forEach(a => {
+                    if (a.isSelected === true) {
+                        userAnswerId.push(a.id)
+                    }
+                })
+                answers.push({
+                    questionId: +questionId,
+                    userAnswerId: userAnswerId
+                })
+            })
+            payload.answers = answers
+            console.log(payload)
+        }
+    }
+    const handleCheckBoxx = (answerId, questionId) => {
+        let dataQuizClone = _.cloneDeep(dataQuiz)
+        let question = dataQuizClone.find(item => +item.questionId === +questionId)
+        if (question && question.answers) {
+            question.answers = question.answers.map((item) => {
+                if (+item.id === +answerId) {
+                    item.isSelected = !item.isSelected
+                }
+                return item
+            })
+        }
+        let index = dataQuizClone.findIndex((item) => +item.questionId === +questionId)
+        if (index > -1) {
+            dataQuizClone[index] = question
+            setDataQuiz(dataQuizClone)
+        }
     }
     return (
         <div className="detail-quiz-container">
@@ -56,16 +98,20 @@ const DetailQuiz = (props) => {
                     <img />
                 </div>
                 <div className="q-content">
-                    <Question index={index}
-                        data={dataQuiz && dataQuiz.length > 0 ? dataQuiz[index] : []} />
+                    <Question
+                        index={index}
+                        handleCheckBoxx={handleCheckBoxx}
+                        data={dataQuiz && dataQuiz.length > 0 ? dataQuiz[index] : []}
+                    />
                 </div>
                 <div className="footer">
-                    <button className="btn btn-primary" onClick={() => handlePrev()}>Prev</button>
-                    <button className="btn btn-secondary" onClick={() => handleNext()}>Next</button>
+                    <button className="btn btn-secondary" onClick={() => handlePrev()}>Prev</button>
+                    <button className="btn btn-primary" onClick={() => handleNext()}>Next</button>
+                    <button className="btn btn-warning" onClick={() => handleFinishQuiz()}>Finish</button>
                 </div>
             </div>
             <div className="right-content">
-                right-content
+
             </div>
         </div>
     )
