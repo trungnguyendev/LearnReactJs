@@ -6,9 +6,10 @@ import { FaTachometerAlt, FaGem, FaList, FaGithub, FaRegLaughWink, FaHeart } fro
 import sidebarBg from '../../assets/bg2.jpg';
 import { DiReact } from "react-icons/di"
 import { MDashboard } from "react-icons/md"
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useNavigate } from "react-router-dom";
 const SideBar = (props) => {
     const { image, collapsed, toggled, handleToggleSidebar } = props;
+    const navigate = useNavigate()
     return (
         <>
             <ProSidebar
@@ -32,7 +33,7 @@ const SideBar = (props) => {
                         }}
                     >
                         <DiReact size={'3em'} color={'00bfff'} />
-                        <span>Trung Dev</span>
+                        <span onClick={() => navigate('/')}>Trung Dev</span>
                     </div>
                 </SidebarHeader>
 
@@ -52,7 +53,9 @@ const SideBar = (props) => {
                         >
                             <MenuItem> Quản lý Users
                                 <Link to="ManageUser" /></MenuItem>
-                            <MenuItem> Quản lý Bài Quiz</MenuItem>
+                            <MenuItem> Quản lý Bài Quiz
+                                <Link to="Manage-quizzes" />
+                            </MenuItem>
                             <MenuItem> Quản lý Câu Hỏi</MenuItem>
                         </SubMenu>
 
