@@ -12,6 +12,7 @@ import Register from "./componets/Auth/Register";
 import ListQuiz from "./componets/User/ListQuiz";
 import DetailQuiz from "./componets/User/DetailQuiz";
 import ManageQuiz from "./componets/Admin/Content/Quiz/ManageQuiz";
+import Questions from "./componets/Admin/Content/Question/Questions";
 const NotFound = () => {
     return (
         <div className="mt-3 alert alert-danger">
@@ -32,6 +33,7 @@ const Layout = (props) => {
                     <Route index element={<DashBoard />} />
                     <Route path="ManageUser" element={<ManageUser />} />
                     <Route path="Manage-quizzes" element={<ManageQuiz />} />
+                    <Route path="Manage-questions" element={<Questions />} />
                 </Route>
                 <Route path='/login' element={<Login />}></Route>
                 <Route path='/Register' element={<Register />}></Route>
