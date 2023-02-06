@@ -5,15 +5,21 @@ import { BsPatchMinusFill } from "react-icons/bs";
 import { AiOutlineMinusCircle, AiOutlinePlusCircle } from "react-icons/ai"
 import { RiImageAddFill } from "react-icons/ri"
 import { v4 as uuidv4 } from 'uuid'
+import Lightbox from "react-awesome-lightbox";
 import _ from 'lodash'
 import './Questions.scss'
 const Questions = (props) => {
     const options = [
-        { value: 'chocolate', label: 'Chocolate' },
-        { value: 'strawberry', label: 'Strawberry' },
-        { value: 'vanilla', label: 'Vanilla' },
+        { value: '', label: '' },
+        { value: '', label: '' },
+        { value: '', label: '' },
     ];
     const [selectedQuiz, setSelectedQuiz] = useState({})
+    const [isPreviewImage, setIsPreviewImage] = useState(false)
+    const [dataImagePreview, setDataImagePreview] = useState({
+        title: '',
+        url: ''
+    })
     const [questions, setQuestions] = useState(
         [
             {
@@ -72,6 +78,56 @@ const Questions = (props) => {
             setQuestions(questionsClone)
         }
     }
+    const handleOnChange = (type, questionId, value) => {
+        let questionsClone = _.cloneDeep(questions)
+        if (type === 'QUESTION') {
+            let index = questionsClone.findIndex(item => item.id === questionId)
+            if (index > -1) {
+                questionsClone[index].description = value
+                setQuestions(questionsClone)
+            }
+        }
+    }
+    const handleOnChangeFileQuestion = (questionId, event) => {
+        let questionsClone = _.cloneDeep(questions)
+        let index = questionsClone.findIndex(item => item.id === questionId)
+        if (index > -1 && event.target && event.target.files && event.target.files[0]) {
+            questionsClone[index].imageFile = event.target.files[0]
+            questionsClone[index].imageName = event.target.files[0].name
+            setQuestions(questionsClone)
+        }
+    }
+    const handleAnswerQuestion = (type, answerId, questionId, value) => {
+        let questionsClone = _.cloneDeep(questions)
+        let index = questionsClone.findIndex(item => item.id === questionId)
+        questionsClone[index].answers.map(answer => {
+            if (answer.id === answerId) {
+                if (type === 'CHECKBOX') {
+                    answer.isCorrect = value
+                }
+                if (type === 'ANSWER') {
+                    answer.description = value
+                }
+            }
+            return answer
+        })
+        setQuestions(questionsClone)
+
+    }
+    const handleSubmitQuestionForQuiz = () => {
+        console.log(questions)
+    }
+    const handlePreviewImage = (questionId) => {
+        setIsPreviewImage(true)
+        let questionsClone = _.cloneDeep(questions)
+        let index = questionsClone.findIndex(item => item.id === questionId)
+        if (index > -1) {
+            setDataImagePreview({
+                title: questionsClone[index].imageName,
+                url: URL.createObjectURL(questionsClone[index].imageFile)
+            })
+        }
+    }
     return (
         <div className="questions-container">
             <div className="title">
@@ -99,15 +155,28 @@ const Questions = (props) => {
                                             className="form-control"
                                             placeholder="Password"
                                             value={question.description}
+                                            onChange={(event) => handleOnChange('QUESTION', question.id, event.target.value)}
                                         />
                                         <label >Question's {index + 1} Description</label>
                                     </div>
                                     <div className="group-upload">
-                                        <label>
+                                        <label htmlFor={`${question.id}`}>
                                             <RiImageAddFill className="label-up" />
                                         </label>
-                                        <input type={'file'} hidden />
-                                        <span>0 file is uploaded</span>
+                                        <input
+                                            id={`${question.id}`}
+                                            type={'file'}
+                                            hidden
+                                            onChange={(event) => handleOnChangeFileQuestion(question.id, event)}
+                                        />
+                                        <span>
+                                            {question.imageName ?
+                                                <span onClick={() => handlePreviewImage(question.id)}
+                                                    style={{ cursor: 'pointer' }}
+                                                >
+                                                    {question.imageName}</span> :
+                                                '0 file is uploaded'
+                                            }</span>
                                     </div>
                                     <div className="btn-add">
                                         <span onClick={() => handleAddRemoveQuestion('ADD', '')}>
@@ -127,12 +196,15 @@ const Questions = (props) => {
                                                 <input
                                                     className="form-check-input iscorrect"
                                                     type="checkbox"
+                                                    checked={answer.isCorrect}
+                                                    onChange={(event) => handleAnswerQuestion('CHECKBOX', answer.id, question.id, event.target.checked)}
                                                 />
                                                 <div className="form-floating answers-name">
                                                     <input type="text"
                                                         className="form-control"
                                                         placeholder="Password"
                                                         value={answer.description}
+                                                        onChange={(event) => handleAnswerQuestion('ANSWER', answer.id, question.id, event.target.value)}
                                                     />
                                                     <label >Answers {index + 1}</label>
                                                 </div>
@@ -145,18 +217,33 @@ const Questions = (props) => {
                                                             <AiOutlineMinusCircle className="icon-remove" />
                                                         </span>
                                                     }
-
                                                 </div>
                                             </div>
                                         )
                                     })
                                 }
-
+                                {isPreviewImage === true &&
+                                    <Lightbox image={dataImagePreview.url}
+                                        title={dataImagePreview.title}
+                                        onClose={() => setIsPreviewImage(false)}
+                                    >
+                                    </Lightbox>
+                                }
                             </div>
                         )
                     })
                 }
+                {
+                    questions && questions.length > 0 &&
+                    <div>
+                        <button
+                            className="btn btn-warning"
+                            onClick={() => handleSubmitQuestionForQuiz()}
+                        >Save Questions</button>
+                    </div>
+                }
             </div>
+
         </div>
     )
 }
