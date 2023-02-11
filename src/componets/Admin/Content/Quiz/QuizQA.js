@@ -9,8 +9,8 @@ import { v4 as uuidv4 } from 'uuid'
 import Lightbox from "react-awesome-lightbox";
 import { toast } from 'react-toastify';
 import _ from 'lodash'
-import './Questions.scss'
-const Questions = (props) => {
+import './QuizQA.scss'
+const QuizQA = (props) => {
     const [selectedQuiz, setSelectedQuiz] = useState({})
     const [isPreviewImage, setIsPreviewImage] = useState(false)
     const [dataImagePreview, setDataImagePreview] = useState({
@@ -185,9 +185,6 @@ const Questions = (props) => {
     }
     return (
         <div className="questions-container">
-            <div className="title">
-                Manage Questions
-            </div>
             <div className="add-new-question">
                 <div className='col-6 form-group mb-2'>
                     <label>Select Quiz:</label>
@@ -302,4 +299,4 @@ const Questions = (props) => {
         </div>
     )
 }
-export default Questions
+export default QuizQA
