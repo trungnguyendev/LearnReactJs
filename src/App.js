@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.scss';
 import Header from './componets/Header/Header';
 import { Outlet, Link } from "react-router-dom";
+import PerfectScrollbar from 'react-perfect-scrollbar'
 const App = () => {
 
   return (
@@ -15,7 +16,9 @@ const App = () => {
 
         </div>
         <div className='app-content'>
-          <Outlet />
+          <PerfectScrollbar>
+            <Outlet />
+          </PerfectScrollbar>
         </div>
       </div>
 
