@@ -6,6 +6,7 @@ import './DetailQuiz.scss'
 import Question from "./Question"
 import { useState } from "react"
 import ModalResult from "./ModalResult"
+import RightContent from "./Content/RightContent"
 const DetailQuiz = (props) => {
     const params = useParams()
     const quizId = params.id
@@ -71,7 +72,6 @@ const DetailQuiz = (props) => {
             })
             payload.answers = answers
             let res = await postSubmitQuiz(payload)
-            console.log(res)
             if (res && res.EC === 0) {
                 setIsShowModalResult(true)
                 setDataModalResult({
@@ -125,7 +125,10 @@ const DetailQuiz = (props) => {
                 </div>
             </div>
             <div className="right-content">
-
+                <RightContent
+                    dataQuiz={dataQuiz}
+                    handleFinishQuiz={handleFinishQuiz}
+                />
             </div>
             <ModalResult
                 show={isShowModalResult}
