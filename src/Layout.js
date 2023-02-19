@@ -13,6 +13,8 @@ import ListQuiz from "./componets/User/ListQuiz";
 import DetailQuiz from "./componets/User/DetailQuiz";
 import ManageQuiz from "./componets/Admin/Content/Quiz/ManageQuiz";
 import Questions from "./componets/Admin/Content/Question/Questions";
+import PrivateRoute from "./routes/PrivateRoute";
+import { Suspense } from 'react';
 const NotFound = () => {
     return (
         <div className="mt-3 alert alert-danger">
@@ -22,14 +24,20 @@ const NotFound = () => {
 }
 const Layout = (props) => {
     return (
-        <>
+        <Suspense fallback="...is loading">
             <Routes>
                 <Route path="/" element={<App />} >
                     <Route index element={<HomePage />} />
-                    <Route path="user" element={<ListQuiz />} />
+                    <Route path="user" element=
+                        {
+                            <PrivateRoute> <ListQuiz /></PrivateRoute>
+                        }
+                    />
                 </Route>
                 <Route path="/quiz/:id" element={<DetailQuiz />} />
-                <Route path="/admin" element={<Admin />} >
+                <Route path="/admin" element={
+                    <PrivateRoute> <Admin /></PrivateRoute>
+                } >
                     <Route index element={<DashBoard />} />
                     <Route path="ManageUser" element={<ManageUser />} />
                     <Route path="Manage-quizzes" element={<ManageQuiz />} />
@@ -37,6 +45,7 @@ const Layout = (props) => {
                 </Route>
                 <Route path='/login' element={<Login />}></Route>
                 <Route path='/Register' element={<Register />}></Route>
+                <Route path='/test' element={<PrivateRoute />}></Route>
                 <Route path='*' element={<NotFound />} />
             </Routes>
             <ToastContainer
@@ -51,7 +60,7 @@ const Layout = (props) => {
                 pauseOnHover
                 theme="light"
             />
-        </>
+        </Suspense>
     )
 }
 export default Layout
